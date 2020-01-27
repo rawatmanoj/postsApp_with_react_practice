@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import jsonPlaceHolder from '../APis/jsonPlaceHolder';
 
 export const fetchPosts= ()=>{
@@ -8,20 +9,34 @@ export const fetchPosts= ()=>{
 
       dispatch({type:'FETCH_POSTS',payload: response.data});
 
-  };
+  }; 
 
 };
 
-export const fetchUser = (id)=>{
+export const fetchUser = (id)=>(dispatch)=>_fetchUser(id,dispatch);
 
-  return async (dispatch)=>{
+const _fetchUser=_.memoize(async(id,dispatch)=>{
+
+  const response = await jsonPlaceHolder.get(`/users/${id}`);
+
+  dispatch({type:'FETCH_USER',payload: response.data});
+
+});
          
-      const response = await jsonPlaceHolder.get(`/users/${id}`);
+      
 
-      dispatch({type:'FETCH_USER',payload: response.data});
+    
 
-  };
+// export const fetchUser = function(id){
 
-};
+//   return async function(dispatch){
+         
+//       const response = await jsonPlaceHolder.get(`/users/${id}`);
+
+//       dispatch({type:'FETCH_USER',payload: response.data});
+
+//   };
+
+// };
 
  
